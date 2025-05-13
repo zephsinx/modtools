@@ -1,11 +1,12 @@
-# Twitch User ID Lookup
+# Mod Tools
 
-A simple web tool to look up Twitch user IDs by username using the Twitch API and OAuth authentication.
+A collection of lightweight web tools designed to assist streamers and moderators with channel management. Currently featuring a Twitch User ID lookup utility, with additional moderation tools in development.
 
 ## Features
 
 - Log in with Twitch (OAuth)
 - Enter a Twitch username to retrieve the corresponding user ID
+- Designed to be easily extended with additional moderation tools
 
 ## Setup
 
@@ -28,8 +29,8 @@ A simple web tool to look up Twitch user IDs by username using the Twitch API an
 
 1. Open the app in your browser.
 2. Log in with your Twitch account.
-3. Enter a Twitch username and click "Get User ID" to retrieve the user ID.
+3. Use the available moderation tools (e.g., enter a Twitch username and click "Get User ID" to retrieve the user ID).
 
 ## Configuration
 
-- Update the `CLIENT_ID` and `REDIRECT_URI` in `index.html` if you use your own Twitch app credentials.
+- Update the `CLIENT_ID` and `REDIRECT_URI` in `constants.js` if you use your own Twitch app credentials.
