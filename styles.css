@@ -23,8 +23,8 @@ button {
 }
 
 input {
-  width: 70%;
-  margin-right: 0.5em;
+  width: 100%;
+  margin-right: 0;
 }
 
 button {
@@ -144,4 +144,10 @@ button:disabled {
     box-shadow: none;
     font-size: 1em;
   }
+}
+
+#lookup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
