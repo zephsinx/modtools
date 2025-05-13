@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mod Tools</title>
-    <meta name="description" content="A suite of simple moderation tools.">
+    <meta name="description" content="A collection of simple moderation tools.">
     <script src="constants.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,7 +14,8 @@
     <div class="container">
         <h2>Mod Tools</h2>
         <div id="login-section">
-            <button id="login-btn" type="button">Log in with Twitch</button>
+            <button id="login-btn" type="button" aria-describedby="login-tooltip">Log in with Twitch</button>
+            <span id="login-tooltip" class="tooltip" role="tooltip">Required to access Twitch API features.</span>
         </div>
         <div id="lookup-section" class="hidden">
             <form id="lookup-form" autocomplete="off">
