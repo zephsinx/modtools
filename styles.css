@@ -58,34 +58,42 @@ button:disabled {
   display: none;
 }
 
-/* Tooltip styles for login button */
-#login-section {
+/* Tooltip styles for question mark icon */
+#login-tooltip-icon {
   position: relative;
+  margin-left: 0.4em;
 }
 
-#login-btn + .tooltip {
+#login-tooltip-icon .tooltip {
   visibility: hidden;
   opacity: 0;
-  width: 200px;
+  min-width: 140px;
+  max-width: 200px;
   background: #232327;
   color: #f3f3f3;
   text-align: center;
   border-radius: 4px;
-  padding: 0.5em;
+  padding: 0.35em 0.7em;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 120%;
+  bottom: 140%;
   z-index: 10;
-  font-size: 0.95em;
+  font-size: 0.85em;
   box-shadow: 0 2px 8px #0003;
   transition: opacity 0.2s;
   pointer-events: none;
+  white-space: normal;
 }
 
-#login-btn:focus + .tooltip,
-#login-btn:hover + .tooltip {
+#login-tooltip-icon:focus .tooltip,
+#login-tooltip-icon:hover .tooltip {
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Remove old login-btn + .tooltip rules */
+#login-btn + .tooltip {
+  display: none !important;
 }

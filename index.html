@@ -14,8 +14,16 @@
     <div class="container">
         <h2>Mod Tools</h2>
         <div id="login-section">
-            <button id="login-btn" type="button" aria-describedby="login-tooltip">Log in with Twitch</button>
-            <span id="login-tooltip" class="tooltip" role="tooltip">Required to access Twitch API features.</span>
+            <button id="login-btn" type="button">Log in with Twitch</button>
+            <span id="login-tooltip-icon" aria-label="Why login is required" aria-describedby="login-tooltip"
+                style="display:inline-block;vertical-align:middle;outline:none;cursor:default;user-select:none;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    style="vertical-align:middle;">
+                    <circle cx="8" cy="8" r="8" fill="#555" /><text x="8" y="12" text-anchor="middle" font-size="11"
+                        fill="#fff" font-family="Arial" font-weight="bold">?</text>
+                </svg>
+                <span id="login-tooltip" class="tooltip" role="tooltip">Required to access Twitch API features</span>
+            </span>
         </div>
         <div id="lookup-section" class="hidden">
             <form id="lookup-form" autocomplete="off">
