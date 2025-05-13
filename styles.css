@@ -55,7 +55,7 @@ button:disabled {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 /* Tooltip styles for question mark icon */
