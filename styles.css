@@ -149,5 +149,77 @@ button:disabled {
 #lookup-form {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 1em;
+}
+
+label[for="username"] {
+  font-size: 1.08em;
+  margin-bottom: 0.4em;
+  display: block;
+}
+
+input[type="text"] {
+  width: 100%;
+  margin-right: 0;
+  border: 1.5px solid #35353a;
+  box-shadow: 0 1px 4px #0002;
+  background: #18181b;
+  color: #f3f3f3;
+  transition: border 0.2s;
+}
+input[type="text"]:focus {
+  border: 1.5px solid #9147ff;
+  outline: none;
+}
+
+#lookup-form button[type="submit"] {
+  width: fit-content;
+  min-width: 140px;
+  align-self: flex-start;
+  margin-top: 0.2em;
+  margin-bottom: 0.5em;
+  box-shadow: 0 1px 4px #9147ff33;
+}
+
+#logout-btn {
+  background: #444;
+  color: #eee;
+  margin-top: 1.2em;
+  width: fit-content;
+  min-width: 100px;
+  align-self: flex-start;
+  opacity: 0.85;
+  font-size: 0.98em;
+  box-shadow: 0 1px 4px #0002;
+  transition: background 0.2s, color 0.2s;
+}
+#logout-btn:hover {
+  background: #232327;
+  color: #fff;
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  label[for="username"] {
+    font-size: 1em;
+    margin-bottom: 0.2em;
+  }
+  #lookup-form {
+    gap: 0.5em;
+  }
+  input,
+  button {
+    font-size: 1.1em;
+    padding: 1em;
+    width: 100%;
+    margin: 0.5em 0 0 0;
+    box-sizing: border-box;
+  }
+  #lookup-form button[type="submit"],
+  #logout-btn {
+    width: 100%;
+    min-width: unset;
+    align-self: stretch;
+    margin: 0.5em 0 0 0;
+  }
 }
