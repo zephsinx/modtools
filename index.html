@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mod Tools</title>
+    <meta name="description" content="A suite of simple moderation tools.">
+    <script src="constants.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Mod Tools</h2>
+        <div id="login-section">
+            <button id="login-btn" type="button">Log in with Twitch</button>
+        </div>
+        <div id="lookup-section" class="hidden">
+            <form id="lookup-form" autocomplete="off">
+                <label for="username">Twitch username</label>
+                <input type="text" id="username" placeholder="Enter Twitch username" required aria-required="true"
+                    aria-label="Twitch username" />
+                <button type="submit">Get User ID</button>
+            </form>
+            <button id="logout-btn" type="button" style="margin-top:1em;background:#555;">Logout</button>
+            <div id="result" class="result hidden" aria-live="polite" role="status"></div>
+            <div id="error" class="error hidden" aria-live="assertive" role="alert"></div>
+        </div>
+    </div>
+    <script>
+        function getAccessTokenFromHash() {
+            if (window.location.hash) {
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                return params.get('access_token');
+            }
+            return null;
+        }
+
+        function show(element) { element.classList.remove('hidden'); }
+        function hide(element) { element.classList.add('hidden'); }
+
+        const loginBtn = document.getElementById('login-btn');
+        const loginSection = document.getElementById('login-section');
+        const lookupSection = document.getElementById('lookup-section');
+        const lookupForm = document.getElementById('lookup-form');
+        const resultDiv = document.getElementById('result');
+        const errorDiv = document.getElementById('error');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        let accessToken = getAccessTokenFromHash();
+        if (accessToken) {
+            localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+            // Remove token from URL for cleanliness
+            window.location.hash = '';
+        } else {
+            accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+        }
+
+        function updateUI() {
+            if (accessToken) {
+                hide(loginSection);
+                show(lookupSection);
+            } else {
+                show(loginSection);
+                hide(lookupSection);
+            }
+            hide(resultDiv);
+            hide(errorDiv);
+        }
+
+        updateUI();
+
+        loginBtn.onclick = function () {
+            const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${CLIENT_ID}` +
+                `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
+                `&response_type=token` +
+                `&scope=${encodeURIComponent(SCOPES)}`;
+            window.location = authUrl;
+        };
+
+        logoutBtn.onclick = function () {
+            localStorage.removeItem(ACCESS_TOKEN_KEY);
+            accessToken = null;
+            updateUI();
+        };
+
+        lookupForm && lookupForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            hide(resultDiv);
+            hide(errorDiv);
+            const username = document.getElementById('username').value.trim();
+            if (!username) {
+                errorDiv.textContent = "Please enter a Twitch username.";
+                show(errorDiv);
+                return;
+            }
+            try {
+                const resp = await fetch(`https://api.twitch.tv/helix/users?login=${encodeURIComponent(username)}`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Client-Id': CLIENT_ID
+                    }
+                });
+                if (resp.status === 401) {
+                    localStorage.removeItem(ACCESS_TOKEN_KEY);
+                    accessToken = null;
+                    updateUI();
+                    errorDiv.textContent = "Your session has expired. Please log in again.";
+                    show(errorDiv);
+                    return;
+                }
+                const data = await resp.json();
+                if (resp.ok && data.data && data.data.length > 0) {
+                    resultDiv.textContent = `User ID for ${username}: ${data.data[0].id}`;
+                    show(resultDiv);
+                } else if (resp.ok && data.data && data.data.length === 0) {
+                    errorDiv.textContent = `User not found.`;
+                    show(errorDiv);
+                } else {
+                    errorDiv.textContent = `An error occurred. Please try again later.`;
+                    show(errorDiv);
+                }
+            } catch (err) {
+                errorDiv.textContent = `Error: ${err.message}`;
+                show(errorDiv);
+            }
+        });
+    </script>
+</body>
+
+</html>
